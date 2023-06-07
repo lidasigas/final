@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Formulario</title>
+    <link href="estilos.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div class="group">
+
+        <form method="POST" action="">
+            <h2><em>Formulario</em></h2>
+            <label for="nombre"> nombre <span><em>(requerido)</em></span></label>
+            <input type="text" name="nombre" class="form-input" required />
+
+            <label for="primer apellido"> primer apellido <span><em>(requerido)</em></span></label>
+            <input type="text" name="primer apellido" class="form-input" required />
+
+            <label for="segundo apellido"> segundo apellido <span><em>(requerido)</em></span></label>
+            <input type="text" name="segundo apellido" class="form-input" required />
+
+            <label for="email"> email <span><em>(requerido)</em></span></label>
+            <input type="email" name="email" class= "form-input" required />
+
+            <label for="login"> login <span><em>(requerido)</em></span></label>
+            <input type="text" name="login" class= "form-input" required />
+
+            <label for="password"> password <span><em>(requerido)</em></span></label>
+            <input type="text" name="password" pattern=[4-8] class= "form-input" required />
+            
+            <input class="form-btn" name="submit" type="submit" value="Enviar" />
+            <input class="form-btn" name= "consulta" /> 
+
+
+            <?php
+
+            if ($_POST) {
+                $nombre = $_POST['nombre'];
+                $primer_apellido = $_POST['primer apellido'];
+                $segundo_apellido = $_POST['segundo apellido'];
+                $email = $_POST['email'];
+                $login = $_POST['login'];
+                $password = $_POST['password'];
+
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $bdname = "examen";
+// esta es la conexión con el servidor, pero yo no sé si está bien, pq el user y el password que pongo aquí, anteriormente dónde los declaré? 
+// o es que no hace falta?
+
+                $conn = new mysqli($servername, $username, $password, $bdname);
+                if ($conn->connect_error) {
+                    die("Connection failed:" . $conn->connect_error);
+                }
+
+                $sql = "INSERT INTO Formulario (nombre, primer apellido, segundo apellido, email, login, password)
+                VALUES ('$nombre', '$primer_apellido', '$segundo_apellido', '$email', '$login', '$password')";
+
+                if ($conn->query($sql) == TRUE) {
+                    echo "Registro completado con éxito"; 
+                } else {
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
+
+                $conn->close();
+
+            }                
+
+            ?>
+
+
+        </form>
+
+    </div>
+</body>
+
+</html>
